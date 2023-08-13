@@ -1,9 +1,8 @@
 # maze-server
 
 ## TODO
-- Create config file
-    - Compare [this project](https://github.com/astriaorg/astria-conductor/blob/main/astria-conductor/src/bin/conductor.rs)
 - Create logging
+    - Compare [this project](https://github.com/astriaorg/astria-conductor/blob/main/astria-conductor/src/bin/conductor.rs)
 - Server loop and console commands (quit)
     - Run in a docker container
     - Setup jenkins build
@@ -35,5 +34,8 @@ cargo llvm-cov
 
 ## Run
 ```bash
-cargo run
+RUST_LOG=trace cargo run
 ```
+
+## Logging
+- [env_logger](https://github.com/rust-cli/env_logger/tree/main)

@@ -6,5 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+env_logger = "0.10.0"
 figment = { version = "0.10", features = ["toml"] }
+log = "0.4.20"
 serde = { version = "1.0.183", features = ["derive"] }
