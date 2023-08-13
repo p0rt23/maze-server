@@ -1,8 +1,6 @@
 # maze-server
 
 ## TODO
-- Create logging
-    - Compare [this project](https://github.com/astriaorg/astria-conductor/blob/main/astria-conductor/src/bin/conductor.rs)
 - Server loop and console commands (quit)
     - Run in a docker container
     - Setup jenkins build
@@ -22,9 +20,12 @@
 ```
 
 ## Configure
+
+Application configuration:
 ```bash
 vi App.toml
 ```
+Log levels can be set via `RUST_LOG` environment variable.
 
 ## Test
 ```bash
