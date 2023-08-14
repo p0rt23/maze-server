@@ -2,33 +2,33 @@ mod config;
 
 use config::*;
 use log::*;
-use std::io::{self, Write};
+use tokio::net::{TcpListener, TcpStream};
 
-fn main() {
-    init_logger();
-    run();
-}
+#[tokio::main]
+async fn main() {
+    let config_path = "./App.toml";
+    let config: Config = init(config_path);
 
-fn init_logger() {
-    env_logger::init();
-    let config: Config = read_config("./App.toml");
-    debug!("config.log_path: {0}", config.log_path);
-}
+    debug!("Binding to interface.");
+    let listener = TcpListener::bind(format!("127.0.0.1:{}", config.port))
+        .await
+        .unwrap();
 
-fn run() {
+    debug!("Listening on: {}", config.port);
     loop {
-        let reader = io::stdin();
-        let mut buffer: String = String::new();
-
-        print!("Command: ");
-        io::stdout().flush().unwrap();
-        reader.read_line(&mut buffer).expect("Failed to read line"); // TODO
-
-        buffer = buffer.trim().to_string();
-
-        if buffer == "quit" {
-            debug!("Execute: {}", buffer);
-            break;
-        }
+        let (socket, _) = listener.accept().await.unwrap();
+        process(socket).await;
     }
+}
+
+fn init(config_path: &str) -> Config {
+    env_logger::init();
+
+    debug!("Reading config file: {}", config_path);
+    read_config(&config_path)
+}
+
+async fn process(socket: TcpStream) {
+    let std_tcp_stream = socket.into_std().unwrap();
+    std_tcp_stream.set_nonblocking(false).unwrap();
 }

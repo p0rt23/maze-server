@@ -6,7 +6,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Config {
-    pub log_path: String,
+    pub port: String,
 }
 
 pub fn read_config(config_path: &str) -> Config {
@@ -22,9 +22,9 @@ mod tests {
     use crate::config::*;
 
     #[test]
-    fn can_read_log_path() {
-        let log_path = "/var/log";
+    fn can_read_port() {
+        let port = "1234";
         let config = read_config("src/config/config_test.toml");
-        assert_eq!(log_path, config.log_path);
+        assert_eq!(port, config.port);
     }
 }

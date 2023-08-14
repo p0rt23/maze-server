@@ -1,12 +1,9 @@
 # maze-server
 
 ## TODO
-- Server loop and console commands (quit)
-    - Run in a docker container
-    - Setup jenkins build
 - Establish rectangle map size
     - Game data struct
-- Listen on port
+- Setup jenkins build
 - Register client connection
     - Set client position
     - Send game data
