@@ -6,8 +6,10 @@ use tokio::net::{TcpListener, TcpStream};
 
 #[tokio::main]
 async fn main() {
+    init_logger();
+
     let config_path = "./App.toml";
-    let config: Config = init(config_path);
+    let config: Config = init_config(config_path);
 
     debug!("Binding to interface.");
     let listener = TcpListener::bind(format!("127.0.0.1:{}", config.port))
@@ -21,11 +23,13 @@ async fn main() {
     }
 }
 
-fn init(config_path: &str) -> Config {
-    env_logger::init();
-
+fn init_config(config_path: &str) -> Config {
     debug!("Reading config file: {}", config_path);
     read_config(&config_path)
+}
+
+fn init_logger() {
+    env_logger::init();
 }
 
 async fn process(socket: TcpStream) {

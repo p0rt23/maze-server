@@ -1,14 +1,16 @@
 # maze-server
 
 ## TODO
-- Establish rectangle map size
-    - Game data struct
-- Setup jenkins build
+- Get rid of unwraps
+- Test coverage
 - Register client connection
     - Set client position
     - Send game data
     - Handle client leave
     - Command: list clients, kick [client-id]
+- Setup jenkins build
+- Establish rectangle map size
+    - Game data struct
 
 ## Install
 ```bash
