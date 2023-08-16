@@ -1,6 +1,8 @@
 # maze-server
 
 ## TODO
+- Handle threads
+  - https://github.com/tokio-rs/tokio/blob/master/examples/chat.rs
 - Get rid of unwraps
 - Test coverage
 - Register client connection

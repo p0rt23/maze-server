@@ -1,25 +1,30 @@
 mod config;
 
+use std::error::Error;
+
 use config::*;
 use log::*;
-use tokio::net::{TcpListener, TcpStream};
+use tokio::{
+    io::AsyncWriteExt,
+    net::{TcpListener, TcpStream},
+};
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn Error>> {
     init_logger();
 
     let config_path = "./App.toml";
     let config: Config = init_config(config_path);
 
     debug!("Binding to interface.");
-    let listener = TcpListener::bind(format!("127.0.0.1:{}", config.port))
-        .await
-        .unwrap();
+    let listener = TcpListener::bind(format!("127.0.0.1:{}", config.port)).await?;
 
     debug!("Listening on: {}", config.port);
     loop {
-        let (socket, _) = listener.accept().await.unwrap();
-        process(socket).await;
+        let (stream, addr) = listener.accept().await?;
+        debug!("Connection from: {}", addr.to_string());
+
+        process(stream);
     }
 }
 
@@ -32,7 +37,8 @@ fn init_logger() {
     env_logger::init();
 }
 
-async fn process(socket: TcpStream) {
-    let std_tcp_stream = socket.into_std().unwrap();
-    std_tcp_stream.set_nonblocking(false).unwrap();
+async fn process(mut stream: TcpStream) -> Result<(), Box<dyn Error>> {
+    stream.write_all(b"hello world!").await?;
+    stream.shutdown().await?;
+    Ok(())
 }
