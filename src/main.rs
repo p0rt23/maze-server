@@ -1,9 +1,8 @@
 mod config;
 
-use std::error::Error;
-
 use config::*;
 use log::*;
+use std::error::Error;
 use tokio::{
     io::AsyncWriteExt,
     net::{TcpListener, TcpStream},
@@ -22,9 +21,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     debug!("Listening on: {}", config.port);
     loop {
         let (stream, addr) = listener.accept().await?;
-        debug!("Connection from: {}", addr.to_string());
 
-        process(stream);
+        tokio::spawn(async move {
+            debug!("Connection from: {}", addr.to_string());
+            if let Err(e) = process(stream).await {
+                error!("Error: {:?}", e);
+            }
+        });
     }
 }
 
