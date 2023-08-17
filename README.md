@@ -3,8 +3,8 @@
 ## TODO
 - Handle threads
   - https://github.com/tokio-rs/tokio/blob/master/examples/chat.rs
-- Get rid of unwraps
 - Test coverage
+- What to do with llvm-cov files on build
 - Register client connection
     - Set client position
     - Send game data
@@ -34,9 +34,22 @@ Log levels can be set via `RUST_LOG` environment variable.
 cargo llvm-cov
 ```
 
+## Build
+```bash
+# local
+cargo build
+
+# docker
+docker build . -t p0rt23/maze-server:latest
+```
+
 ## Run
 ```bash
+# local
 RUST_LOG=trace cargo run
+
+# docker
+docker run --rm --name maze-server -p 7111:7111 p0rt23/maze-server:latest
 ```
 
 ## Logging

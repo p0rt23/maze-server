@@ -16,7 +16,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let config: Config = init_config(config_path);
 
     debug!("Binding to interface.");
-    let listener = TcpListener::bind(format!("127.0.0.1:{}", config.port)).await?;
+    let listener = TcpListener::bind(format!("0.0.0.0:{}", config.port)).await?;
 
     debug!("Listening on: {}", config.port);
     loop {

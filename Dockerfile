@@ -16,5 +16,7 @@ WORKDIR /app
 COPY --from=builder /app/target/release/maze-server /app/
 COPY App.toml /app/
 
+EXPOSE 7111
+
 ENV RUST_LOG="debug"
 CMD ["/app/maze-server"]
